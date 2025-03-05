@@ -1,0 +1,43 @@
+{
+  "name" : "demo-job1",
+  "jobMode" : "VISUAL",
+  "description" : "final job for both s3 and redshift as target",
+  "role" : "arn:aws:iam::626635446272:role/tech-demo-glue-redshift",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-626635446272-eu-north-1/scripts/demo-job1.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-626635446272-eu-north-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-enable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-626635446272-eu-north-1/temporary/"
+  },
+  "connections" : {
+    "connections" : [ "Jdbc connection", "Network connection" ]
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "codeGenConfigurationNodes" : "{\"node-1741118416676\":{\"AmazonRedshiftTarget\":{\"Data\":{\"AccessType\":\"connection\",\"Action\":\"append\",\"AdvancedOptions\":[],\"Connection\":{\"Description\":\"No description available. Version: 1\",\"Label\":\"Jdbc connection\",\"Value\":\"Jdbc connection\"},\"IamRole\":{\"Description\":\"Allows Glue to call AWS services on your behalf. \",\"Label\":\"tech-demo-glue-redshift\"},\"MergeAction\":\"simple\",\"MergeWhenMatched\":\"update\",\"MergeWhenNotMatched\":\"insert\",\"Schema\":{\"Label\":\"public\",\"Value\":\"public\"},\"SelectedColumns\":[],\"SourceType\":\"table\",\"StagingTable\":\"public.youtube_trending_temp_9w7tpp\",\"Table\":{\"Label\":\"youtube_trending\",\"Value\":\"youtube_trending\"},\"TableSchema\":[{\"Description\":\"VARCHAR\",\"Label\":\"kind\",\"Value\":\"kind\"},{\"Description\":\"VARCHAR\",\"Label\":\"etag\",\"Value\":\"etag\"},{\"Description\":\"BIGINT\",\"Label\":\"id\",\"Value\":\"id\"},{\"Description\":\"VARCHAR\",\"Label\":\"snippet_channelid\",\"Value\":\"snippet_channelid\"},{\"Description\":\"VARCHAR\",\"Label\":\"snippet_title\",\"Value\":\"snippet_title\"},{\"Description\":\"BOOLEAN\",\"Label\":\"snippet_assignable\",\"Value\":\"snippet_assignable\"},{\"Description\":\"VARCHAR\",\"Label\":\"video_id\",\"Value\":\"video_id\"},{\"Description\":\"VARCHAR\",\"Label\":\"trending_date\",\"Value\":\"trending_date\"},{\"Description\":\"VARCHAR\",\"Label\":\"title\",\"Value\":\"title\"},{\"Description\":\"VARCHAR\",\"Label\":\"channel_title\",\"Value\":\"channel_title\"},{\"Description\":\"BIGINT\",\"Label\":\"category_id\",\"Value\":\"category_id\"},{\"Description\":\"VARCHAR\",\"Label\":\"publish_time\",\"Value\":\"publish_time\"},{\"Description\":\"VARCHAR\",\"Label\":\"tags\",\"Value\":\"tags\"},{\"Description\":\"BIGINT\",\"Label\":\"views\",\"Value\":\"views\"},{\"Description\":\"BIGINT\",\"Label\":\"likes\",\"Value\":\"likes\"},{\"Description\":\"BIGINT\",\"Label\":\"dislikes\",\"Value\":\"dislikes\"},{\"Description\":\"BIGINT\",\"Label\":\"comment_count\",\"Value\":\"comment_count\"},{\"Description\":\"VARCHAR\",\"Label\":\"thumbnail_link\",\"Value\":\"thumbnail_link\"},{\"Description\":\"BOOLEAN\",\"Label\":\"comments_disabled\",\"Value\":\"comments_disabled\"},{\"Description\":\"BOOLEAN\",\"Label\":\"ratings_disabled\",\"Value\":\"ratings_disabled\"},{\"Description\":\"BOOLEAN\",\"Label\":\"video_error_or_removed\",\"Value\":\"video_error_or_removed\"},{\"Description\":\"VARCHAR\",\"Label\":\"description\",\"Value\":\"description\"},{\"Description\":\"VARCHAR\",\"Label\":\"region\",\"Value\":\"region\"}],\"TempDir\":\"s3://aws-glue-assets-626635446272-eu-north-1/temporary/\",\"Upsert\":false},\"Inputs\":[\"node-1741118278104\"],\"Name\":\"Amazon Redshift\"}},\"node-1741118262114\":{\"CatalogSource\":{\"Database\":\"tech_demo_cleaned\",\"Name\":\"AWS Glue Data Catalog\",\"Table\":\"cleaned_statistics_reference_data\"}},\"node-1741118237073\":{\"CatalogSource\":{\"Database\":\"tech_demo_cleaned\",\"Name\":\"AWS Glue Data Catalog\",\"Table\":\"raw_statistics\"}},\"node-1741118322581\":{\"S3GlueParquetTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1741117628055\",\"IsEnabled\":true},\"Compression\":\"snappy\",\"Inputs\":[\"node-1741118278104\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[[\"region\"]],\"Path\":\"s3://tech-demo-analytics\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false,\"UpdateBehavior\":\"UPDATE_IN_DATABASE\"}}},\"node-1741118278104\":{\"Join\":{\"Columns\":[{\"From\":\"node-1741118262114\",\"Keys\":[[\"id\"]]},{\"From\":\"node-1741118237073\",\"Keys\":[[\"category_id\"]]}],\"Inputs\":[\"node-1741118262114\",\"node-1741118237073\"],\"JoinType\":\"equijoin\",\"Name\":\"Join\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "tech_demo",
+    "branch" : "main",
+    "folder" : "tech_demo_final_analytics"
+  }
+}
